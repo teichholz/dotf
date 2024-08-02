@@ -1,0 +1,3 @@
+ls
+cd .config/zsh/
+nvim .zshrc

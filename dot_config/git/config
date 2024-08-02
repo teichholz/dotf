@@ -1,0 +1,52 @@
+[user]
+	name = Tim Eichholz
+	email = t.eichholz@reply.de
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEF6oy4PTKCvkx/W8LfHsOW2Zb//mXbvC2bK7AZyDwsL
+[mergetool]
+	keepBackup = true
+[core]
+	excludesfile = /Users/t.eichholz/.config/git/ignore
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+
+[commit]
+  gpgsign = true
+
+[core]
+  pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    # delta detects terminal colors automatically; set one of these to disable auto-detection
+    # dark = true
+    # light = true
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
+
+[alias]
+	st = status -sb
+	ll = log --oneline
+	last = log -1 HEAD --stat
+	cm = commit -m
+	rv = remote -v
+	d = diff
+	dv = difftool -t vimdiff -y
+	gl = config --global -l
+	se = !git rev-list --all | xargs git grep -F
+  graph = log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  changedfiles = "diff-tree --no-commit-id -r --name-only"
+  discard = reset HEAD --hard
+  uncommit = reset --soft HEAD^
+  unstage = reset HEAD --
+  wip = "!f() { git add . && git commit -m 'Work in progress'; }; f"

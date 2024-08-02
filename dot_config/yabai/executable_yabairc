@@ -1,0 +1,34 @@
+#!/bin/bash
+
+yabai -m config layout bsp
+
+yabai -m config top_padding    10
+yabai -m config bottom_padding 10
+yabai -m config left_padding   10
+yabai -m config right_padding  10
+yabai -m config window_gap     10
+
+# # set mouse interaction modifier key (default: fn)
+yabai -m config mouse_modifier alt
+
+# # set modifier + left-click drag to move window (default: move)
+yabai -m config mouse_action1 move
+
+# # set modifier + right-click drag to resize window (default: resize)
+yabai -m config mouse_action2 resize
+
+yabai -m rule --add app="^System­einstellungen$" manage=off
+yabai -m rule --add app="^Raycast$" manage=off
+
+# Jetbrains floating windows apps
+yabai -m rule --add title="^Settings$" manage=off
+yabai -m rule --add title="^Rename$" manage=off
+yabai -m rule --add title="^Copy$" manage=off
+yabai -m rule --add title="^Move$" manage=off
+yabai -m rule --add title="^Delete$" manage=off
+yabai -m rule --add title="^Add File to Git$" manage=off
+yabai -m rule --add title="^Blocker$" manage=off
+yabai -m rule --add app="^1Password$" manage=off
+yabai -m rule --add app="^DBeaver$" manage=off
+yabai -m rule --add app="^Rize$" manage=off
+yabai -m rule --add title="^CleanShot$" manage=off
