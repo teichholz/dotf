@@ -32,3 +32,6 @@ yabai -m rule --add app="^1Password$" manage=off
 yabai -m rule --add app="^DBeaver$" manage=off
 yabai -m rule --add app="^Rize$" manage=off
 yabai -m rule --add title="^CleanShot$" manage=off
+
+# highlights the focused window
+borders active_color=0xff9da9ff inactive_color=0x00414550 width=5.0 &
