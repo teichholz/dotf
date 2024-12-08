@@ -1,21 +1,3 @@
-# fasd
-if command -v fasd > /dev/null; then
-	export _FASD_DATA="$XDG_CACHE_HOME/fasd"
-	# export _FASD_VIMINFO="$HOME/.viminfo" # this is the default
-	export _FASD_BACKENDS="native recently-used current viminfo"
-	local shell; for shell in dash zsh; do
-  _FASD_SHELL="$(command -v $shell)" && break
-	done
-	_cache fasd --init auto
-fi 
-
-if command -v op > /dev/null; then
-  eval "$(op completion zsh)"; compdef _op op
-  source /Users/t.eichholz/.config/op/plugins.sh
-  # OP Openai Reference
-  export OPENAI_API_KEY="op://Personal/OpenAI/Anmeldedaten"
-fi 
-
 export EDITOR=nvim
 
 # zsh-vi-mode
@@ -30,6 +12,10 @@ if command -v fd >/dev/null; then
 	export FZF_DEFAULT_OPTS="--reverse --ansi"
 	export FZF_DEFAULT_COMMAND="fd . -H"
 	export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_CTRL_T_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 	export FZF_ALT_C_COMMAND="fd -t d . $HOME"
 	export FZF_COMPLETION_TRIGGER="**"
   export FZF_COMPLETION_OPTS='--border --info=inline'

@@ -33,15 +33,38 @@ return {
 
 
   -- Surround plugin
-  { 'echasnovski/mini.surround',  version = false, config = true },
-  -- Split / join arguments to functions
-  { 'echasnovski/mini.splitjoin', version = false, config = true },
+  { 'echasnovski/mini.surround', version = false, config = true },
+  -- Split / join arguments to functions, gS is keybind
+  -- {'echasnovski/mini.splitjoin', version = false, config = true},
+  {
+    'Wansmer/treesj',
+    keys = {
+      { "gS", mode = { "n", "x", "o" }, function() require("treesj").toggle() end, desc = "Toggle Tree" },
+    },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' }, -- if you install parsers with `nvim-treesitter`
+    config = true,
+    opts = {}
+  },
   -- More text objects
   -- use treesitter objects
-  { 'echasnovski/mini.ai',        version = false, config = true },
-  -- Make f, t work over multiple lines
-  { 'echasnovski/mini.jump',      version = false, config = true },
+  { 'echasnovski/mini.ai',       version = false, config = true },
+  -- -- Make f, t work over multiple lines
+  -- { 'echasnovski/mini.jump',      version = false, config = true },
   -- which key like key hints
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    ---@type Flash.Config
+    opts = {},
+    -- stylua: ignore
+    keys = {
+      { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+      { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+      { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+      { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+    },
+  },
   {
     'echasnovski/mini.clue',
     version = false,

@@ -22,7 +22,8 @@ alias teich-ssh="ssh tim@teichserver"
 alias lman="man -M $HOME/ubuntu-man/"
 
 # ai pair programming
-alias aider="python3 -m aider.main"
+alias aider="op run --no-masking -- python3 -m aider --vim"
+alias vimdiff="nvim -d"
 
 
 if command -v nvim >/dev/null; then
@@ -60,13 +61,6 @@ if command -v python3 >/dev/null; then
   alias py='python3'
 fi
 
-if command -v a >/dev/null; then
-	alias O='a -e xdg-open' # quick opening files with xdg-open
-	alias e='f -e nvim'
-	alias v='f -e nvim'
-  alias z='fasd_cd -d'
-fi
-
 if command -v exa >/dev/null; then
 	alias cat='bat --theme Dracula'
 fi
@@ -99,11 +93,20 @@ cheat() {
   cht.sh "$lang/$thing/$answrcnt" | less -R
 }
 
+function yi() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
 e() {
   if [[ -f $1 ]] && command -v nvim > /dev/null; then
     nvim $1
   elif [[ -d $1 ]] && command -v nnn > /dev/null; then
-    nnn $1
+    yi $1
   fi
 }
 

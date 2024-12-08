@@ -7,8 +7,6 @@ local function map(mode, lhs, rhs, opts)
 end
 
 local opts = { noremap=true, silent=true }
-
-
 map("n", "H", "^", opts)
 map("n", "L", "g_", opts)
 map("n", "<C-q>", ":q!<CR>", opts)
@@ -17,4 +15,4 @@ map("v", ">", ">gv", opts)
 map("n", "<tab>", "%", opts)
 map("v", "<tab>", "%", opts)
 map("n", "U", "<cmd>redo<cr>", opts)
-map("n", "<C-I>", "<C-I>", opts)
+map("n", "<c-i>", "<c-i>", opts)
