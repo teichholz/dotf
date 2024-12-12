@@ -37,8 +37,8 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   alias p=pbpaste
 else
   alias o='xdg-open'
-  alias y=xclip -selection clipboard -in
-  alias p=xclip -selection clipboard -ou
+  alias y="xclip -selection clipboard -in"
+  alias p="xclip -selection clipboard -ou"
 fi
 
 if command -v wget >/dev/null; then

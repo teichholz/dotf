@@ -1,5 +1,6 @@
 # Amazon Q pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
+[[ -f "${HOME}/.local/share/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/.local/share/amazon-q/shell/zshrc.pre.zsh"
+
 if [ -n "${ZSH_DEBUGRC+1}" ]; then
     zmodload zsh/zprof
 fi
@@ -8,6 +9,7 @@ if [ ! -d "$ZGEN_DIR" ]; then
   echo "Installing jandamm/zgenom"
   git clone https://github.com/jandamm/zgenom "$ZGEN_DIR"
 fi
+
 source $ZGEN_DIR/zgenom.zsh
 zgenom autoupdate
 
@@ -27,8 +29,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     zgenom load zdharma-continuum/fast-syntax-highlighting
     zgenom load zsh-users/zsh-completions src
     zgenom load zsh-users/zsh-autosuggestions
-    zgenom load zsh-users/zsh-history-substring-search
-    zgenom load romkatv/powerlevel10k powerlevel10k
+    # zgenom load zsh-users/zsh-history-substring-search
     zgenom load hlissner/zsh-autopair autopair.zsh
 fi
 
@@ -49,8 +50,10 @@ if [[ $TERM != dumb ]]; then
 	eval "$(direnv hook zsh)"
   # nicer cd / cdpath
   eval "$(zoxide init zsh)"
-  # asdf package manager
-  source $(brew --prefix asdf)/libexec/asdf.sh
+  if [[ "$OSTYPE" =~ ^darwin ]]; then
+    # asdf package manager
+    source $(brew --prefix asdf)/libexec/asdf.sh
+  fi
   # node version manager
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
@@ -67,7 +70,10 @@ if [[ $TERM != dumb ]]; then
   fi
 
   # source cargo env
-  . "$HOME/.cargo/env"
+  _source "$HOME/.cargo/env"
+
+  # 1password plugins
+  _source $HOME/.config/op/plugins.sh
 fi
 
 if [ -n "${ZSH_DEBUGRC+1}" ]; then
@@ -75,4 +81,4 @@ if [ -n "${ZSH_DEBUGRC+1}" ]; then
 fi
 
 # Amazon Q post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
+[[ -f "${HOME}/.local/share/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/.local/share/amazon-q/shell/zshrc.post.zsh"

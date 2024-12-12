@@ -114,8 +114,8 @@ return {
     opts = {}, -- for default options, refer to the configuration section for custom setup.
   },
   -- UI for notifications in general as well as lsp notifications
-  {
-    "j-hui/fidget.nvim",
-    config = true,
-  }
+  -- {
+  --   "j-hui/fidget.nvim",
+  --   config = true,
+  -- }
 }

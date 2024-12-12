@@ -35,13 +35,3 @@ local options = {
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
-
--- local handle = io.popen('defaults read -g AppleInterfaceStyle 2>/dev/null')
--- local result = handle:read("*a")
--- handle:close()
--- if string.gsub(result, "%s+", "") == 'Dark' then
---   vim.cmd("set background=dark")
--- else
---   vim.cmd("set background=light")
--- end
--- vim.cmd("hi Normal ctermbg=none guibg=none")

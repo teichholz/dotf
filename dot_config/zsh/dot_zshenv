@@ -21,4 +21,5 @@ function _source {
 
 # XDG conventions
 export XDG_CACHE_HOME="$HOME/.cache"
+export ZGEN_DIR="$XDG_CACHE_HOME/zgenom"
 export ZSH_CACHE="$XDG_CACHE_HOME"
