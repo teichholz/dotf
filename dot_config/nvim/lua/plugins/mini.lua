@@ -17,8 +17,6 @@ return {
     },
     config = true
   },
-  -- Auto pair
-  -- { 'echasnovski/mini.pairs',  version = false, config = true },
   {
     'windwp/nvim-autopairs',
     event = "InsertEnter",
@@ -33,9 +31,19 @@ return {
 
 
   -- Surround plugin
-  { 'echasnovski/mini.surround', version = false, config = true },
+  { 'echasnovski/mini.surround',  version = false, config = true },
+
+  -- move visual blocks
+  { 'echasnovski/mini.move',      version = false, config = true },
+
+  -- move visual blocks
+  { 'echasnovski/mini.operators', version = false, config = true },
+
+  -- More text objects
+  -- use treesitter objects
+  { 'echasnovski/mini.ai',        version = false, config = true },
+
   -- Split / join arguments to functions, gS is keybind
-  -- {'echasnovski/mini.splitjoin', version = false, config = true},
   {
     'Wansmer/treesj',
     keys = {
@@ -45,12 +53,6 @@ return {
     config = true,
     opts = {}
   },
-  -- More text objects
-  -- use treesitter objects
-  { 'echasnovski/mini.ai',       version = false, config = true },
-  -- -- Make f, t work over multiple lines
-  -- { 'echasnovski/mini.jump',      version = false, config = true },
-  -- which key like key hints
   {
     "folke/flash.nvim",
     event = "VeryLazy",
@@ -65,6 +67,7 @@ return {
       { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
     },
   },
+  -- which key like key hints
   {
     'echasnovski/mini.clue',
     version = false,

@@ -11,7 +11,7 @@
   format = ssh
 
 [gpg "ssh"]
-  program = "/opt/1Password/op-ssh-sign"
+  program = {{ .ssh_key_program | quote }}
 
 [commit]
   gpgsign = true

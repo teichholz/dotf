@@ -105,7 +105,7 @@ function yi() {
 e() {
   if [[ -f $1 ]] && command -v nvim > /dev/null; then
     nvim $1
-  elif [[ -d $1 ]] && command -v nnn > /dev/null; then
+  elif [[ -d $1 ]] && command -v yazi > /dev/null; then
     yi $1
   fi
 }
