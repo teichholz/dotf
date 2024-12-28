@@ -24,8 +24,8 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
     zgenom load jeffreytse/zsh-vi-mode
     zgenom load hlissner/zsh-autopair autopair.zsh
   else 
-    zgenom load junegunn/fzf shell
     zgenom load jeffreytse/zsh-vi-mode
+    zgenom load junegunn/fzf shell
     zgenom load zdharma-continuum/fast-syntax-highlighting
     zgenom load zsh-users/zsh-completions src
     zgenom load zsh-users/zsh-autosuggestions
@@ -37,13 +37,17 @@ fi
   zgenom compile $ZDOTDIR
 fi
 
+# vi plugin overwrites keybinds so I have to defer mine after zsh vi is Initialized
+function zvm_after_init() {
+	source $ZDOTDIR/aliases.zsh
+	source $ZDOTDIR/keybinds.zsh
+  source <(fzf --zsh)
+}
 
 if [[ $TERM != dumb ]]; then
   autoload -Uz compinit && compinit -u -d $ZSH_CACHE/zcompdump
   source $ZDOTDIR/config.zsh
-	source $ZDOTDIR/keybinds.zsh
 	source $ZDOTDIR/completion.zsh
-	source $ZDOTDIR/aliases.zsh
 	
 	autopair-init
   # nice project local environment variablees
@@ -58,8 +62,6 @@ if [[ $TERM != dumb ]]; then
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash
-  # fuzzy finding
-  source <(fzf --zsh)
   # nice prompt
   eval "$(starship init zsh)"
 

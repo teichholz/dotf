@@ -20,10 +20,10 @@ bindkey '\eOB' history-substring-search-down
 fancy-ctrl-z () {
   if [[ $#BUFFER -eq 0 ]]; then
     BUFFER="fg"
-    zle accept-line
+    zle accept-line -w
   else
-    zle push-input
-    zle clear-screen
+    zle push-input -w
+    zle clear-screen -w
   fi
 }
 zle -N fancy-ctrl-z
@@ -37,15 +37,15 @@ history-beginning-search-backward-then-append() {
 zle -N history-beginning-search-backward-then-append
 bindkey -M viins '^x^l' history-beginning-search-backward-then-append
 
+arch () {
+  o $(fd . /usr/share/doc/arch-wiki/html/en | fzf)
+}
+zle -N arch
+
 # FZF
 bindkey '^T' fzf-file-widget
 bindkey '^R' fzf-history-widget
-
-# FASD
-bindkey '^X^A' fasd-complete
-bindkey '^X^F' fasd-complete-f
-bindkey '^X^D' fasd-complete-d
-
+bindkey '^H' arch 
 # goto argument
 bindkey '^[1' beginning-of-line
 bindkey -s '^[2' '^A^F'
@@ -56,5 +56,5 @@ bindkey -s '^[6' '^A^F^F^F^F^F'
 bindkey -s '^[7' '^A^F^F^F^F^F^F'
 bindkey -s '^[8' '^A^F^F^F^F^F^F^F'
 
-# vim with fzf
-bindkey -s '^V' 'nvim $(fzf --preview="bat {}")^M'
+# just vim :)
+bindkey -s '^V' 'vim . ^M'

@@ -1,18 +1,32 @@
+local augroup = vim.api.nvim_create_augroup("AutoFormat", {})
+local on_attach = function(client, bufnr)
+  if client.supports_method("textDocument/formatting") then
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = augroup,
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.format({ bufnr = bufnr, id = client.id })
+      end,
+    })
+  end
+end
+
 return {
   { "williamboman/mason.nvim",                     config = true },
   {
     "williamboman/mason-lspconfig.nvim",
     config = function()
-      require("mason-lspconfig").setup()
+      require("mason-lspconfig").setup {}
 
       require("mason-lspconfig").setup_handlers {
         -- The first entry (without a key) will be the default handler
         -- and will be called for each installed server that doesn't have
         -- a dedicated handler.
         function(server_name) -- default handler (optional)
-          local capabilities = require('cmp_nvim_lsp').default_capabilities()
+          local caps = require('blink.cmp').get_lsp_capabilities()
           require("lspconfig")[server_name].setup {
-            capabilities = capabilities
+            capabilieties = caps
           }
         end,
         -- Next, you can provide a dedicated handler for specific servers.
@@ -23,16 +37,53 @@ return {
   {
     "neovim/nvim-lspconfig",
     keys = {
-      { "go",     "<cmd>Telescope lsp_document_symbols<cr>",          desc = "Document Symbols (Telescope)" },
-      { "gf",     "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", desc = "Dynamic Workspace Symbols (Telescope)" },
-      { "gd",     "<cmd>Telescope lsp_definitions<cr>",               desc = "Definitions (Telescope)" },
-      { "gi",     "<cmd>Telescope lsp_implementations<cr>",           desc = "Implementations (Telescope)" },
-      { "gD",     "<cmd>Telescope lsp_references<cr>",                desc = "References (Telescope)" },
-      { "cr",     vim.lsp.buf.rename,                                 desc = "Rename" },
-      { "ca",     vim.lsp.buf.code_action,                            desc = "Code Action" },
-      { "<cmd>.", vim.lsp.buf.code_action,                            desc = "Code Action" },
-      { "cf",     vim.lsp.buf.format,                                 desc = "Format" },
-    }
+      { "cr",         vim.lsp.buf.rename, desc = "Rename" },
+      { "cf",         vim.lsp.buf.format, desc = "Format" },
+      { "<leader>cr", vim.lsp.buf.rename, desc = "Rename" },
+      { "<leader>cf", vim.lsp.buf.format, desc = "Format" },
+    },
+    config = function()
+      vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(args)
+          local c = vim.lsp.get_client_by_id(args.data.client_id)
+          if c.supports_method("textDocument/formatting") then
+            if not c then return end
+            vim.api.nvim_create_autocmd('BufWritePre', {
+              buffer = args.buf,
+              callback = function()
+                vim.lsp.buf.format({ bufnr = args.buf, id = c.id })
+              end,
+            })
+          end
+        end,
+      })
+    end,
+  },
+  {
+    "nvimtools/none-ls.nvim",
+    opts = function(_, opts)
+      local nls = require("null-ls")
+      opts.root_dir = opts.root_dir
+          or require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git")
+      opts.sources = vim.list_extend(opts.sources or {}, {
+        nls.builtins.formatting.stylua,
+        nls.builtins.completion.spell,
+        nls.builtins.formatting.isort,
+        nls.builtins.formatting.black,
+      })
+      opts.on_attach = opts.on_attach or on_attach
+    end,
+  },
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -54,8 +105,8 @@ return {
     config = {
       opts = {
         -- Defaults
-        enable_close = true,      -- Auto close tags
-        enable_rename = true,     -- Auto rename pairs of tags
+        enable_close = true,          -- Auto close tags
+        enable_rename = true,         -- Auto rename pairs of tags
         enable_close_on_slash = false -- Auto close on trailing </
       },
       -- Also override individual filetype configs, these take priority.
@@ -113,9 +164,4 @@ return {
     },
     opts = {}, -- for default options, refer to the configuration section for custom setup.
   },
-  -- UI for notifications in general as well as lsp notifications
-  -- {
-  --   "j-hui/fidget.nvim",
-  --   config = true,
-  -- }
 }

@@ -1,4 +1,5 @@
 export EDITOR=nvim
+export MANPAGER="nvim +Man!"
 
 # zsh-vi-mode
 export ZVM_INIT_MODE=sourcing
