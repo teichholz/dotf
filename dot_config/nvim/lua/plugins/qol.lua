@@ -60,6 +60,7 @@ return {
     },
     config = true
   },
+  -- columnar file viewer 2
   {
     'stevearc/oil.nvim',
     ---@module 'oil'
@@ -71,6 +72,20 @@ return {
     keys = {
       { "-", function() vim.cmd("Oil") end, desc = "Oil Browser" }
     }
+  },
+  -- tree file viewer
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
+    keys = {
+      { "<leader>oF", function() vim.cmd("Neotree position=current") end, desc = "File Tree" }
+    },
   },
   {
     'windwp/nvim-autopairs',
@@ -142,55 +157,30 @@ return {
     opts = {},
     -- stylua: ignore
     keys = {
-      { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
-      { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
-      { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
-      { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+      { "s",     mode = { "n" },      function() require("flash").jump() end,              desc = "Flash" },
+      { "S",     mode = { "n" },      function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+      { "r",     mode = "o",          function() require("flash").remote() end,            desc = "Remote Flash" },
+      { "R",     mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" },      function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
     },
   },
   -- which key like key hints
   {
-    'echasnovski/mini.clue',
-    version = false,
+    "folke/which-key.nvim",
+    event = "VeryLazy",
     opts = {
-      triggers = {
-        -- Leader triggers
-        { mode = 'n', keys = '<Leader>' },
-        { mode = 'x', keys = '<Leader>' },
-
-        -- Built-in completion
-        { mode = 'i', keys = '<C-x>' },
-
-        -- c key for code actions
-        { mode = 'n', keys = 'c' },
-
-        -- `g` key
-        { mode = 'n', keys = 'g' },
-        { mode = 'x', keys = 'g' },
-
-        { mode = 'n', keys = '[' },
-        { mode = 'n', keys = ']' },
-
-        -- Marks
-        { mode = 'n', keys = "'" },
-        { mode = 'n', keys = '`' },
-        { mode = 'x', keys = "'" },
-        { mode = 'x', keys = '`' },
-
-        -- Registers
-        { mode = 'n', keys = '"' },
-        { mode = 'x', keys = '"' },
-        { mode = 'i', keys = '<C-r>' },
-        { mode = 'c', keys = '<C-r>' },
-
-        -- Window commands
-        { mode = 'n', keys = '<C-w>' },
-
-        -- `z` key
-        { mode = 'n', keys = 'z' },
-        { mode = 'x', keys = 'z' },
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
       },
-    }
-  },
+    },
+  }
 }

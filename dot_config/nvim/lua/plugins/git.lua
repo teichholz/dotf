@@ -7,6 +7,11 @@ return {
     }
   },
   {
+    "lewis6991/gitsigns.nvim",
+    config = true,
+    opts = {}
+  },
+  {
     "NeogitOrg/neogit",
     dependencies = {
       "nvim-lua/plenary.nvim",  -- required

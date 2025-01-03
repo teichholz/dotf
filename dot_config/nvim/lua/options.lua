@@ -40,6 +40,3 @@ for k, v in pairs(options) do
 end
 
 vim.cmd("colorscheme tokyonight")
-vim.cmd("highlight Normal ctermbg=NONE guibg=NONE")
-vim.cmd("highlight TelescopeNormal ctermbg=NONE guibg=NONE")
-vim.cmd("highlight SignColumn ctermbg=NONE guibg=NONE")

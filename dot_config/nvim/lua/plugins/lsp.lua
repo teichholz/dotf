@@ -1,17 +1,3 @@
-local augroup = vim.api.nvim_create_augroup("AutoFormat", {})
-local on_attach = function(client, bufnr)
-  if client.supports_method("textDocument/formatting") then
-    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      group = augroup,
-      buffer = bufnr,
-      callback = function()
-        vim.lsp.buf.format({ bufnr = bufnr, id = client.id })
-      end,
-    })
-  end
-end
-
 return {
   { "williamboman/mason.nvim",                     config = true },
   {
@@ -45,13 +31,13 @@ return {
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
-          local c = vim.lsp.get_client_by_id(args.data.client_id)
-          if c.supports_method("textDocument/formatting") then
-            if not c then return end
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if not client then return end
+          if client.supports_method("textDocument/formatting") then
             vim.api.nvim_create_autocmd('BufWritePre', {
               buffer = args.buf,
               callback = function()
-                vim.lsp.buf.format({ bufnr = args.buf, id = c.id })
+                vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
               end,
             })
           end
@@ -61,6 +47,9 @@ return {
   },
   {
     "nvimtools/none-ls.nvim",
+    dependencies = {
+      "nvimtools/none-ls-extras.nvim",
+    },
     opts = function(_, opts)
       local nls = require("null-ls")
       opts.root_dir = opts.root_dir
@@ -69,9 +58,9 @@ return {
         nls.builtins.formatting.stylua,
         nls.builtins.completion.spell,
         nls.builtins.formatting.isort,
-        nls.builtins.formatting.black,
+        nls.builtins.formatting.black
       })
-      opts.on_attach = opts.on_attach or on_attach
+      opts.on_attach = opts.on_attach
     end,
   },
   {
