@@ -1,21 +1,22 @@
-local function map(mode, lhs, rhs, opts)
-  local options = { noremap = true, silent = true, }
+local function map(mode, lhs, rhs, opts, desc)
+  local options = { noremap = true, silent = true, desc = desc }
   if opts then
     options = vim.tbl_extend("force", options, opts)
   end
   vim.keymap.set(mode, lhs, rhs, options)
 end
 
-local opts = { noremap = true, silent = true }
-map("n", "H", "^", opts)
-map("n", "L", "g_", opts)
-map("n", "<C-q>", ":q!<CR>", opts)
-map("v", "<", "<gv", opts)
-map("v", ">", ">gv", opts)
-map("n", "<tab>", "%", opts)
-map("v", "<tab>", "%", opts)
-map("n", "U", "<cmd>redo<cr>", opts)
-map("n", "<c-i>", "<c-i>", opts)
+local opts = {}
+map("n", "H", "^", opts, "Beginning of line")
+map("n", "L", "g_", opts, "End of line")
+map("n", "<C-q>", ":q!<CR>", opts, "Quit!")
+map("v", "<", "<gv", opts, "Indent")
+map("v", ">", ">gv", opts, "Indent")
+map({ "n", "v" }, "<tab>", "%", opts, "Match pair")
+map("n", "U", "<cmd>redo<cr>", opts, "Redo")
+map("n", "<c-i>", "<c-i>", opts, nil)
+map("n", "]b", "<cmd>bnext<cr>", opts, "Next buffer")
+map("n", "[b", "<cmd>bprev<cr>", opts, "Previos buffer")
 
 function OpenFileOrManPage()
   -- Get the word under the cursor (file or man page reference)
@@ -28,4 +29,4 @@ function OpenFileOrManPage()
   end
 end
 
-map("n", "gf", OpenFileOrManPage, { noremap = true })
+map("n", "gf", OpenFileOrManPage, {}, nil)
