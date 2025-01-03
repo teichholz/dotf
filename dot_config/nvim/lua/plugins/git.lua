@@ -104,6 +104,6 @@ return {
       "echasnovski/mini.pick", -- optional
     },
     config = true,
-    { "<leader>gg", function() vim.cmd("Neogit") end, desc = "Neogit" },
+    keys = { { "<leader>gg", function() vim.cmd("Neogit") end, desc = "Neogit" } },
   },
 }

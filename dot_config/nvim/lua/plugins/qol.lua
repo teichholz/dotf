@@ -51,16 +51,7 @@ return {
       config = true
     }
   },
-  -- Columnar file viewer
-  {
-    'echasnovski/mini.files',
-    version = false,
-    keys = {
-      { "<leader>of", function() MiniFiles.open() end, desc = "File Browser" }
-    },
-    config = true
-  },
-  -- columnar file viewer 2
+  -- columnar file viewer
   {
     'stevearc/oil.nvim',
     ---@module 'oil'
@@ -82,6 +73,16 @@ return {
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
       -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
+    opts = {
+      window = {
+        mappings = {
+          ["Z"] = "expand_all_nodes",
+          ["l"] = "set_root",
+          ["h"] = "navigate_up",
+          ["."] = "toggle_hidden",
+        }
+      }
     },
     keys = {
       { "<leader>oF", function() vim.cmd("Neotree position=current") end, desc = "File Tree" }
