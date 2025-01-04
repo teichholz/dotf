@@ -86,13 +86,6 @@ run() {
   ig $* &
 }
 
-cheat() {
-  local lang="$1";
-  local thing="$2";
-  local answrcnt="${3:-1}"
-  cht.sh "$lang/$thing/$answrcnt" | less -R
-}
-
 function yi() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	yazi "$@" --cwd-file="$tmp"
@@ -107,6 +100,8 @@ e() {
     nvim $1
   elif [[ -d $1 ]] && command -v yazi > /dev/null; then
     yi $1
+  else 
+    o $1
   fi
 }
 

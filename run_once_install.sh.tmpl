@@ -8,12 +8,10 @@ brew "git-delta"
 brew "fzf"
 brew "tmux"
 brew "asdf"
-brew "borders"
 brew "yabai"
 brew "fd"
 brew "aider"
 brew "ripgrep"
-brew "fx"
 brew "bat"
 brew "jq"
 brew "glow"
@@ -24,7 +22,6 @@ brew "tldr"
 brew "exa"
 brew "nvim"
 brew "lazydocker"
-brew "nnn"
 brew "direnv"
 brew "yazi"
 cask "1password-cli"
@@ -32,3 +29,19 @@ cask "obsidian"
 cask "chatgpt"
 EOF
 {{ end -}}
+
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+
+sudo pacman -S --noconfirm yay
+yay -S --noconfirm "git" "lazygit" "git-delta" \
+"lazydocker" \
+"fzf" "fd" "ripgrep" "bat" "jq" "zoxide" "tree" "tldr" "exa" "yazi" \
+"nvim" "visual-studio-code-bin" "direnv" "asdf" "nix" \
+"starship" \
+"aider" 
+{{ end -}}
+
+if ! command -v nix; then
+  sh <(curl -L https://nixos.org/nix/install) --daemon
+fi
