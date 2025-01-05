@@ -5,8 +5,7 @@ export MANPAGER="nvim +Man!"
 export ZVM_INIT_MODE=sourcing
 export ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
-#powerlvl 10k
-export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+export OPENAI_API_KEY=$(op read "op://Personal/OpenAI API Key/password")
 
 # fd > find
 if command -v fd >/dev/null; then
