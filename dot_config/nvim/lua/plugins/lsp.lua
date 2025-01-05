@@ -28,41 +28,52 @@ return {
       { "<leader>cr", vim.lsp.buf.rename, desc = "Rename" },
       { "<leader>cf", vim.lsp.buf.format, desc = "Format" },
     },
-    config = function()
-      vim.api.nvim_create_autocmd('LspAttach', {
-        callback = function(args)
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          if not client then return end
-          if client.supports_method("textDocument/formatting") then
-            vim.api.nvim_create_autocmd('BufWritePre', {
-              buffer = args.buf,
-              callback = function()
-                vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
-              end,
-            })
-          end
-        end,
-      })
-    end,
   },
   {
-    "nvimtools/none-ls.nvim",
-    dependencies = {
-      "nvimtools/none-ls-extras.nvim",
+    'stevearc/conform.nvim',
+    opts = {
+      formatters_by_ft = {
+        python = { "isort", "black" },
+        javascript = { "prettierd", "prettier", stop_after_first = true }
+      },
+      format_on_save = {
+        -- These options will be passed to conform.format()
+        timeout_ms = 500,
+        lsp_format = "fallback",
+      },
     },
-    opts = function(_, opts)
-      local nls = require("null-ls")
-      opts.root_dir = opts.root_dir
-          or require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git")
-      opts.sources = vim.list_extend(opts.sources or {}, {
-        nls.builtins.formatting.stylua,
-        nls.builtins.completion.spell,
-        nls.builtins.formatting.isort,
-        nls.builtins.formatting.black
-      })
-      opts.on_attach = opts.on_attach
-    end,
   },
+  {
+    "mfussenegger/nvim-lint",
+    config = function()
+      require('lint').linters_by_ft = {
+        javascript = { 'eslint_d' },
+      }
+      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+        callback = function()
+          require("lint").try_lint()
+        end,
+      })
+    end
+  },
+  -- {
+  --   "nvimtools/none-ls.nvim",
+  --   dependencies = {
+  --     "nvimtools/none-ls-extras.nvim",
+  --   },
+  --   opts = function(_, opts)
+  --     local nls = require("null-ls")
+  --     opts.root_dir = opts.root_dir
+  --         or require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git")
+  --     opts.sources = vim.list_extend(opts.sources or {}, {
+  --       nls.builtins.formatting.stylua,
+  --       nls.builtins.completion.spell,
+  --       nls.builtins.formatting.isort,
+  --       nls.builtins.formatting.black
+  --     })
+  --     opts.on_attach = opts.on_attach
+  --   end,
+  -- },
   {
     "folke/lazydev.nvim",
     ft = "lua",
@@ -81,7 +92,7 @@ return {
       local configs = require("nvim-treesitter.configs")
 
       configs.setup({
-        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html", "go", "rust" },
+        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html", "go", "rust", "python", "regex", "bash" },
         sync_install = false,
         highlight = { enable = true },
         indent = { enable = true },
