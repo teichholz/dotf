@@ -54,3 +54,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 
 # install python version manager
 curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# rustup 
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain none -y
+rustup toolchain install nightly --allow-downgrade --profile minimal --component clippy

@@ -1,7 +1,7 @@
 # Amazon Q pre block. Keep at the top of this file.
 [[ -f "${HOME}/.local/share/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/.local/share/amazon-q/shell/zshrc.pre.zsh"
 
-if [ -n "${ZSH_DEBUGRC+1}" ]; then
+if [ "${ZSH_DEBUGRC+1}" != "" ]; then
     zmodload zsh/zprof
 fi
 
@@ -10,44 +10,44 @@ if [ ! -d "$ZGEN_DIR" ]; then
   git clone https://github.com/jandamm/zgenom "$ZGEN_DIR"
 fi
 
-source $ZGEN_DIR/zgenom.zsh
+source "$ZGEN_DIR"/zgenom.zsh
 zgenom autoupdate
 
 if ! zgenom saved; then
   echo "Initializing zgenom"
-  rm -f $ZDOTDIR/*.zwc(N) \
-        $XDG_CACHE_HOME/zsh/*(N) \
-        $ZGEN_INIT.zwc
+  rm -f "$ZDOTDIR/*.zwc(N)" \
+        "$XDG_CACHE_HOME/zsh/*(N)" \
+        "$ZGEN_INIT.zwc"
 
-if [[ "$OSTYPE" =~ ^darwin ]]; then
-    zgenom load junegunn/fzf shell
-    zgenom load jeffreytse/zsh-vi-mode
-    zgenom load hlissner/zsh-autopair autopair.zsh
-  else 
-    zgenom load jeffreytse/zsh-vi-mode
-    zgenom load junegunn/fzf shell
-    zgenom load zdharma-continuum/fast-syntax-highlighting
-    zgenom load zsh-users/zsh-completions src
-    zgenom load zsh-users/zsh-autosuggestions
-    # zgenom load zsh-users/zsh-history-substring-search
-    zgenom load hlissner/zsh-autopair autopair.zsh
-fi
+  if [[ "$OSTYPE" =~ ^darwin ]]; then
+      zgenom load junegunn/fzf shell
+      zgenom load jeffreytse/zsh-vi-mode
+      zgenom load hlissner/zsh-autopair autopair.zsh
+    else 
+      zgenom load jeffreytse/zsh-vi-mode
+      zgenom load junegunn/fzf shell
+      zgenom load zdharma-continuum/fast-syntax-highlighting
+      zgenom load zsh-users/zsh-completions src
+      zgenom load zsh-users/zsh-autosuggestions
+      # zgenom load zsh-users/zsh-history-substring-search
+      zgenom load hlissner/zsh-autopair autopair.zsh
+  fi
 
   zgenom save
-  zgenom compile $ZDOTDIR
+  zgenom compile "$ZDOTDIR"
 fi
 
 # vi plugin overwrites keybinds so I have to defer mine after zsh vi is Initialized
 function zvm_after_init() {
-	source $ZDOTDIR/aliases.zsh
-	source $ZDOTDIR/keybinds.zsh
+	source "$ZDOTDIR"/aliases.zsh
+	source "$ZDOTDIR"/keybinds.zsh
   source <(fzf --zsh)
 }
 
 if [[ $TERM != dumb ]]; then
-  autoload -Uz compinit && compinit -u -d $ZSH_CACHE/zcompdump
-  source $ZDOTDIR/config.zsh
-	source $ZDOTDIR/completion.zsh
+  autoload -Uz compinit && compinit -u -d "$ZSH_CACHE"/zcompdump
+  source "$ZDOTDIR"/config.zsh
+	source "$ZDOTDIR"/completion.zsh
 	
 	autopair-init
   # nice project local environment variablees
@@ -56,7 +56,7 @@ if [[ $TERM != dumb ]]; then
   eval "$(zoxide init zsh)"
   if [[ "$OSTYPE" =~ ^darwin ]]; then
     # asdf package manager
-    source $(brew --prefix asdf)/libexec/asdf.sh
+    source "$(brew --prefix asdf)"/libexec/asdf.sh
   fi
   # node version manager
   export NVM_DIR="$HOME/.nvm"
@@ -75,10 +75,10 @@ if [[ $TERM != dumb ]]; then
   _source "$HOME/.cargo/env"
 
   # 1password plugins
-  _source $HOME/.config/op/plugins.sh
+  _source "$HOME"/.config/op/plugins.sh
 fi
 
-if [ -n "${ZSH_DEBUGRC+1}" ]; then
+if [ "${ZSH_DEBUGRC+1}" != "" ]; then
     zprof
 fi
 

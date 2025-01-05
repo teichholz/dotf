@@ -3,20 +3,26 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     config = function()
-      require("mason-lspconfig").setup {}
-
-      require("mason-lspconfig").setup_handlers {
-        -- The first entry (without a key) will be the default handler
-        -- and will be called for each installed server that doesn't have
-        -- a dedicated handler.
+      local handlers = {
         function(server_name) -- default handler (optional)
           local caps = require('blink.cmp').get_lsp_capabilities()
           require("lspconfig")[server_name].setup {
             capabilieties = caps
           }
         end,
-        -- Next, you can provide a dedicated handler for specific servers.
-        -- For example, a handler override for the `rust_analyzer`:
+
+        ["bashls"] = function()
+          require("lspconfig").bashls.setup {
+            filetypes = { "bash", "zsh", "sh" },
+            capabilieties = require('blink.cmp').get_lsp_capabilities()
+          }
+        end
+      }
+
+      require("mason-lspconfig").setup {
+        ensure_installed = { "lua_ls", "bashls" },
+        automatic_installation = true,
+        handlers = handlers
       }
     end
   },
@@ -34,7 +40,10 @@ return {
     opts = {
       formatters_by_ft = {
         python = { "isort", "black" },
-        javascript = { "prettierd", "prettier", stop_after_first = true }
+        javascript = { "prettierd", "prettier", stop_after_first = true },
+        zsh = { "shellharden" },
+        sh = { "shellharden" },
+        bash = { "shellharden" },
       },
       format_on_save = {
         -- These options will be passed to conform.format()
@@ -56,24 +65,19 @@ return {
       })
     end
   },
-  -- {
-  --   "nvimtools/none-ls.nvim",
-  --   dependencies = {
-  --     "nvimtools/none-ls-extras.nvim",
-  --   },
-  --   opts = function(_, opts)
-  --     local nls = require("null-ls")
-  --     opts.root_dir = opts.root_dir
-  --         or require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git")
-  --     opts.sources = vim.list_extend(opts.sources or {}, {
-  --       nls.builtins.formatting.stylua,
-  --       nls.builtins.completion.spell,
-  --       nls.builtins.formatting.isort,
-  --       nls.builtins.formatting.black
-  --     })
-  --     opts.on_attach = opts.on_attach
-  --   end,
-  -- },
+  {
+    "nvimtools/none-ls.nvim",
+    dependencies = {
+      "nvimtools/none-ls-extras.nvim",
+    },
+    opts = function(_, opts)
+      local null_ls = require("null-ls")
+      opts.root_dir = opts.root_dir
+          or require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git")
+      opts.sources = vim.list_extend(opts.sources or {}, {})
+      opts.on_attach = opts.on_attach
+    end,
+  },
   {
     "folke/lazydev.nvim",
     ft = "lua",
