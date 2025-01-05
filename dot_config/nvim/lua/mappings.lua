@@ -6,24 +6,14 @@ local function map(mode, lhs, rhs, opts, desc)
   vim.keymap.set(mode, lhs, rhs, options)
 end
 
-local opts = {}
-map("n", "H", "^", opts, "Beginning of line")
-map("n", "L", "g_", opts, "End of line")
-map("n", "<C-q>", ":q!<CR>", opts, "Quit!")
-map("v", "<", "<gv", opts, "Indent")
-map("v", ">", ">gv", opts, "Indent")
-map({ "n", "v" }, "<tab>", "%", opts, "Match pair")
-map("n", "U", "<cmd>redo<cr>", opts, "Redo")
-map("n", "<c-i>", "<c-i>", opts, nil)
-map("n", "]b", "<cmd>bnext<cr>", opts, "Next buffer")
-map("n", "[b", "<cmd>bprev<cr>", opts, "Previos tab")
-map("n", "]t", "<cmd>tabnext<cr>", opts, "Next tab")
-map("n", "[t", "<cmd>tabprev<cr>", opts, "Next tab")
-map("n", "<C-1>", "<cmd>tabn 1<cr>", opts, "Tab 1")
-map("n", "<C-2>", "<cmd>tabn 2<cr>", opts, "Tab 2")
-map("n", "<C-3>", "<cmd>tabn 3<cr>", opts, "Tab 3")
-map("n", "<C-3>", "<cmd>tabn 4<cr>", opts, "Tab 4")
-map("n", "<C-3>", "<cmd>tabn 5<cr>", opts, "Tab 5")
+function Quit()
+  local buffers = vim.fn.getbufinfo({ buflisted = 1 })
+  if #buffers > 1 then
+    vim.cmd("bdelete")
+  else
+    vim.cmd("q!")
+  end
+end
 
 function OpenFileOrManPage()
   -- Get the word under the cursor (file or man page reference)
@@ -36,4 +26,17 @@ function OpenFileOrManPage()
   end
 end
 
+local opts = {}
+map("n", "<C-q>", Quit, opts, "Quit")
+map("n", "<c-i>", "<c-i>", opts, nil)
+map("n", "H", "^", opts, "Beginning of line")
+map("n", "L", "g_", opts, "End of line")
+map("n", "U", "<cmd>redo<cr>", opts, "Redo")
+map("n", "[b", "<cmd>bprev<cr>", opts, "Previos tab")
+map("n", "[t", "<cmd>tabprev<cr>", opts, "Next tab")
+map("n", "]b", "<cmd>bnext<cr>", opts, "Next buffer")
+map("n", "]t", "<cmd>tabnext<cr>", opts, "Next tab")
 map("n", "gf", OpenFileOrManPage, {}, nil)
+map("v", "<", "<gv", opts, "Indent")
+map("v", ">", ">gv", opts, "Indent")
+map({ "n", "v" }, "<tab>", "%", opts, "Match pair")

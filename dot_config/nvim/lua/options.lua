@@ -20,9 +20,6 @@ local options = {
 
   -- smart search
   smartcase = true,
-  -- cursor line
-
-  cursorline = true,
 
   -- theme
   termguicolors = true,

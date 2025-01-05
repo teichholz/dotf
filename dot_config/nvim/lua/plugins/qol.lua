@@ -108,7 +108,25 @@ return {
   },
 
   -- Surround plugin
-  { 'echasnovski/mini.surround',  version = false, config = true },
+  {
+    'echasnovski/mini.surround',
+    version = false,
+    opts = {
+
+      mappings = {
+        add = "gsa",            -- Add surrounding in Normal and Visual modes
+        delete = "gsd",         -- Delete surrounding
+        find = "gsf",           -- Find surrounding (to the right)
+        find_left = "gsF",      -- Find surrounding (to the left)
+        highlight = "gsh",      -- Highlight surrounding
+        replace = "gsr",        -- Replace surrounding
+        update_n_lines = "gsn", -- Update `n_lines`
+        suffix_last = 'p',      -- Suffix to search with "prev" method
+        suffix_next = 'n',      -- Suffix to search with "next" method
+      },
+    },
+    config = true
+  },
 
   -- move visual blocks
   { 'echasnovski/mini.move',      version = false, config = true },
@@ -135,7 +153,7 @@ return {
             a = { '@conditional.outer', '@loop.outer' },
             i = { '@conditional.inner', '@loop.inner' },
           })
-        }
+        },
       }
     end,
     config = true,
@@ -158,11 +176,8 @@ return {
     opts = {},
     -- stylua: ignore
     keys = {
-      { "s",     mode = { "n" },      function() require("flash").jump() end,              desc = "Flash" },
-      { "S",     mode = { "n" },      function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
-      { "r",     mode = "o",          function() require("flash").remote() end,            desc = "Remote Flash" },
-      { "R",     mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      { "<c-s>", mode = { "c" },      function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+      { "s", mode = { "n" }, function() require("flash").jump() end,       desc = "Flash" },
+      { "S", mode = { "n" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
     },
   },
   -- which key like key hints
