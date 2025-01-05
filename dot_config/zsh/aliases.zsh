@@ -79,17 +79,17 @@ take() {
 }; compdef take=mkdir
 
 ig() {
-  $* &> /dev/null
+  "$@" &> /dev/null
 }
 
 run() {
-  ig $* &
+  ig "$@" &
 }
 
 function yi() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+	if cwd="$(command cat -- "$tmp")" && [ "$cwd" != "" ] && [ "$cwd" != "$PWD" ]; then
 		builtin cd -- "$cwd"
 	fi
 	rm -f -- "$tmp"
@@ -97,11 +97,11 @@ function yi() {
 
 e() {
   if [[ -f $1 ]] && command -v nvim > /dev/null; then
-    nvim $1
+    nvim "$1"
   elif [[ -d $1 ]] && command -v yazi > /dev/null; then
-    yi $1
+    yi "$1"
   else 
-    o $1
+    o "$1"
   fi
 }
 

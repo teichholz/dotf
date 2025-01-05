@@ -15,6 +15,15 @@ return {
           adapter = "openai",
         },
       },
+      adapters = {
+        openai = function()
+          return require("codecompanion.adapters").extend("openai", {
+            env = {
+              api_key = "cmd:op read op://Personal/OpenAI/Anmeldedaten --no-newline",
+            },
+          })
+        end,
+      },
     },
     keys = {
       { "aa",         "<cmd>CodeCompanion<cr>",     mode = { "v" },  desc = "Ask AI" },

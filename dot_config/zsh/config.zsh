@@ -5,8 +5,6 @@ export MANPAGER="nvim +Man!"
 export ZVM_INIT_MODE=sourcing
 export ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
-export OPENAI_API_KEY=$(op read "op://Personal/OpenAI API Key/password")
-
 # fd > find
 if command -v fd >/dev/null; then
 	export FZF_DEFAULT_OPTS="--reverse --ansi"
@@ -78,7 +76,7 @@ setopt HIST_BEEP                 # Beep when accessing non-existent history.
 ## Directories
 DIRSTACKSIZE=9
 setopt AUTO_CD              # Auto changes to a directory without typing cd.
-cdpath=($HOME/git)
+cdpath=("$HOME"/git)
 setopt AUTO_PUSHD           # Push the old directory onto the stack on cd.
 setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
 setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
