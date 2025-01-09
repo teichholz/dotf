@@ -5,16 +5,12 @@ return {
     config = function()
       local handlers = {
         function(server_name) -- default handler (optional)
-          local caps = require('blink.cmp').get_lsp_capabilities()
-          require("lspconfig")[server_name].setup {
-            capabilieties = caps
-          }
+          require("lspconfig")[server_name].setup {}
         end,
 
         ["bashls"] = function()
           require("lspconfig").bashls.setup {
             filetypes = { "bash", "zsh", "sh" },
-            capabilieties = require('blink.cmp').get_lsp_capabilities()
           }
         end
       }

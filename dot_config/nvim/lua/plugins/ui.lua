@@ -23,52 +23,76 @@ return {
       "rcarriga/nvim-notify",
     }
   },
+  -- which key like key hints
   {
-    "folke/snacks.nvim",
-    priority = 1000,
-    lazy = false,
-    ---@type snacks.Config
+    "folke/which-key.nvim",
+    event = "VeryLazy",
     opts = {
       -- your configuration comes here
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
-      bigfile = { enabled = true },
-      dashboard = { enabled = false },
-      indent = { enabled = false },
-      input = { enabled = true },
-      notifier = { enabled = true },
-      quickfile = { enabled = true },
-      scroll = { enabled = false },
-      statuscolumn = { enabled = true },
-      words = { enabled = false },
     },
     keys = {
-      { "<leader>z", function() Snacks.zen() end,                     desc = "Toggle Zen Mode" },
-      { "<leader>Z", function() Snacks.zen.zoom() end,                desc = "Toggle Zoom" },
-      { "<leader>.", function() Snacks.scratch() end,                 desc = "Toggle Scratch Buffer" },
-      { "]]",        function() Snacks.words.jump(vim.v.count1) end,  desc = "Next Reference",       mode = { "n", "t" } },
-      { "[[",        function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference",       mode = { "n", "t" } },
-    },
-    init = function()
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "VeryLazy",
-        callback = function()
-          -- Setup some globals for debugging (lazy-loaded)
-          _G.dd = function(...)
-            Snacks.debug.inspect(...)
-          end
-          _G.bt = function()
-            Snacks.debug.backtrace()
-          end
-          vim.print = _G.dd -- Override print to use snacks for `:=` command
+      {
+        "<leader>?",
+        function()
+          require("which-key").show({ global = false })
         end,
-      })
-    end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
   },
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {}
+  },
+  {
+    'stevearc/quicker.nvim',
+    event = "FileType qf",
+    ---@module "quicker"
+    ---@type quicker.SetupOptions
+    opts = {},
+  },
+  {
+    'Bekaboo/dropbar.nvim',
+    dependencies = {
+      'nvim-telescope/telescope-fzf-native.nvim',
+      build = 'make'
+    },
+    config = function(_, opts)
+      local dropbar_api = require('dropbar.api')
+      local dropbar_opts = require('dropbar.configs').opts
+      local enable = function(buf, win, _)
+        if not vim.g.breadcrumbs then
+          return false
+        end
+        return dropbar_opts.bar.enable(buf, win, _)
+      end
+      local opts = {
+        bar = {
+          enable = enable,
+        }
+      }
+      require('dropbar').setup(opts)
+      vim.keymap.set('n', '<Leader>;', dropbar_api.pick, { desc = 'Pick symbols in winbar' })
+      vim.keymap.set('n', '[;', dropbar_api.goto_context_start, { desc = 'Go to start of current context' })
+      vim.keymap.set('n', '];', dropbar_api.select_next_context, { desc = 'Select next context' })
+    end
+  },
+  {
+    'Bekaboo/dropbar.nvim',
+    opts = function()
+      Snacks.toggle({
+        name = "Breadcrumbs",
+        get = function()
+          return vim.g.breadcrumbs == nil or vim.g.breadcrumbs
+        end,
+        set = function(state)
+          vim.g.breadcrumbs = state
+        end,
+      }):map("<leader>uB")
+    end,
   },
   {
     'akinsho/bufferline.nvim',
@@ -77,6 +101,7 @@ return {
     dependencies = 'nvim-tree/nvim-web-devicons',
     opts = {
       options = {
+        style_preset = 2,
         close_command = function(n) Snacks.bufdelete(n) end,
         right_mouse_command = function(n) Snacks.bufdelete(n) end,
         diagnostics = "nvim_lsp",
@@ -98,7 +123,9 @@ return {
       { "<C-3>", "<cmd>BufferLineGoToBuffer 4<cr>", "Tab 4" },
       { "<C-3>", "<cmd>BufferLineGoToBuffer 5<cr>", "Tab 5" },
     },
-    config = true
+    config = function(_, opts)
+      require('bufferline').setup(opts)
+    end
   },
   {
     'nvim-lualine/lualine.nvim',

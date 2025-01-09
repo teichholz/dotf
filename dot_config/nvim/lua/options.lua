@@ -48,5 +48,6 @@ end
 
 -- custom
 vim.g.autoformat = true
+vim.g.breadcrumbs = false
 
 vim.cmd("colorscheme tokyonight")

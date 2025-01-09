@@ -1,10 +1,47 @@
+function GoToDefinition()
+  local params = vim.lsp.util.make_position_params()
+
+  vim.lsp.buf_request(0, 'textDocument/definition', params, function(_, result)
+    if result == nil then
+      print("No definition found.")
+      return
+    end
+
+    local count = 0
+    if type(result) == "table" then
+      if vim.islist(result) then
+        count = #result
+      else
+        count = 1
+      end
+    end
+
+    if count > 1 then
+      vim.cmd("Fzf lsp_definitions")
+    else
+      vim.lsp.buf.definition()
+    end
+  end)
+end
+
 return {
   {
     "ibhagwan/fzf-lua",
     -- optional for icon support
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
-      "default"
+      "default",
+      files = {
+        rg_opts = "--follow"
+      },
+      grep = {
+        rg_opts =
+        "--color=never --column --line-number --no-heading --smart-case --max-columns=4096 --follow -e -g !node_modules"
+      },
+      live_grep = {
+        rg_opts =
+        "--color=never --column --line-number --no-heading --smart-case --max-columns=4096 --follow -e -g !node_modules"
+      },
     },
     config = true,
     keys = {
@@ -27,7 +64,7 @@ return {
       { "ga",         "<cmd>Fzf lsp_code_actions<cr>",      desc = "Code Actions (Fzf)" },
       { "go",         "<cmd>Fzf lsp_document_symbols<cr>",  desc = "Document Symbols (Fzf)" },
       { "gO",         "<cmd>Fzf lsp_workspace_symbols<cr>", desc = "Project Symbols (Fzf)" },
-      { "gd",         "<cmd>Fzf lsp_definitions<cr>",       desc = "Definitions (Fzf)" },
+      { "gd",         "<cmd>lua GoToDefinition()<cr>",      desc = "Definitions (Fzf)" },
       { "gi",         "<cmd>Fzf lsp_implementations<cr>",   desc = "Implementations (Fzf)" },
       { "gD",         "<cmd>Fzf lsp_references<cr>",        desc = "References (Fzf)" },
     }
