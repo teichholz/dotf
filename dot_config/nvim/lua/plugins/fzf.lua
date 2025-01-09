@@ -36,11 +36,11 @@ return {
       },
       grep = {
         rg_opts =
-        "--color=never --column --line-number --no-heading --smart-case --max-columns=4096 --follow -e -g !node_modules"
+        "--color=never --column --line-number --no-heading --smart-case --max-columns=4096 --follow --glob '!node_modules' -e"
       },
       live_grep = {
         rg_opts =
-        "--color=never --column --line-number --no-heading --smart-case --max-columns=4096 --follow -e -g !node_modules"
+        "--color=never --column --line-number --no-heading --smart-case --max-columns=4096 --follow --glob '!node_modules' -e"
       },
     },
     config = true,
