@@ -11,12 +11,10 @@ function GoToDefinition()
     if type(result) == "table" then
       if vim.islist(result) then
         count = #result
-      else
-        count = 1
       end
     end
 
-    if count > 1 then
+    if count > 0 then
       vim.cmd("Fzf lsp_definitions")
     else
       vim.lsp.buf.definition()
