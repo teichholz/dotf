@@ -112,7 +112,6 @@ return {
     'echasnovski/mini.surround',
     version = false,
     opts = {
-
       mappings = {
         add = "gsa",            -- Add surrounding in Normal and Visual modes
         delete = "gsd",         -- Delete surrounding

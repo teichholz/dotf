@@ -21,8 +21,8 @@ return {
       { "<leader>fk", "<cmd>Fzf keymaps<cr>",               desc = "Keymaps" },
       { "<leader>fr", "<cmd>Fzf resume<cr>",                desc = "Resume" },
       { "<leader>fb", "<cmd>Fzf buffers<cr>",               desc = "Buffers" },
-      { "<leader>fg", "<cmd>Fzf grep<cr>",                  desc = "Grep" },
-      { "<leader>fG", "<cmd>Fzf grep_project<cr>",          desc = "Project Grep" },
+      { "<leader>fg", "<cmd>Fzf grep_cword<cr>",            desc = "Grep" },
+      { "<leader>fG", "<cmd>Fzf live_grep<cr>",             desc = "Project Grep" },
 
       { "ga",         "<cmd>Fzf lsp_code_actions<cr>",      desc = "Code Actions (Fzf)" },
       { "go",         "<cmd>Fzf lsp_document_symbols<cr>",  desc = "Document Symbols (Fzf)" },

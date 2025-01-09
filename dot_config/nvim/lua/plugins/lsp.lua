@@ -30,27 +30,65 @@ return {
     "neovim/nvim-lspconfig",
     keys = {
       { "cr",         vim.lsp.buf.rename, desc = "Rename" },
-      { "cf",         vim.lsp.buf.format, desc = "Format" },
+      -- { "cf",         vim.lsp.buf.format, desc = "Format" },
       { "<leader>cr", vim.lsp.buf.rename, desc = "Rename" },
-      { "<leader>cf", vim.lsp.buf.format, desc = "Format" },
+      -- { "<leader>cf", vim.lsp.buf.format, desc = "Format" },
     },
   },
   {
     'stevearc/conform.nvim',
+    lazy = false,
     opts = {
       formatters_by_ft = {
         python = { "isort", "black" },
-        javascript = { "prettierd", "prettier", stop_after_first = true },
+        javascript = { "prettierd", "prettier", stop_after_first = true, lsp_format = "prefer" },
         zsh = { "shellharden" },
         sh = { "shellharden" },
         bash = { "shellharden" },
       },
-      format_on_save = {
-        -- These options will be passed to conform.format()
-        timeout_ms = 500,
-        lsp_format = "fallback",
+      format_on_save = function(bufnr)
+        if not vim.g.autoformat then
+          return
+        end
+
+        return {
+          timeout_ms = 500,
+          lsp_format = "fallback",
+        }
+      end,
+    },
+    keys = {
+      {
+        "<leader>cf",
+        function()
+          require("conform").format({ lsp_format = "fallback", bufnr = vim.api.nvim_get_current_buf() })
+        end,
+        mode = { "n", "o", "x" },
+        desc = "Format"
+      },
+      {
+        "cf",
+        function()
+          require("conform").format({ lsp_format = "fallback", bufnr = vim.api.nvim_get_current_buf() })
+        end,
+        mode = { "n", "o", "x" },
+        desc = "Format"
       },
     },
+  },
+  {
+    'stevearc/conform.nvim',
+    opts = function()
+      Snacks.toggle({
+        name = "Autoformat",
+        get = function()
+          return vim.g.autoformat == nil or vim.g.autoformat
+        end,
+        set = function(state)
+          vim.g.autoformat = state
+        end,
+      }):map("<leader>uF")
+    end,
   },
   {
     "mfussenegger/nvim-lint",
@@ -74,7 +112,9 @@ return {
       local null_ls = require("null-ls")
       opts.root_dir = opts.root_dir
           or require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git")
-      opts.sources = vim.list_extend(opts.sources or {}, {})
+      opts.sources = vim.list_extend(opts.sources or {}, {
+        require("none-ls.code_actions.eslint"),
+      })
       opts.on_attach = opts.on_attach
     end,
   },
@@ -139,13 +179,6 @@ return {
         }
       }
     }
-  },
-  {
-    "nvim-treesitter/nvim-treesitter-context",
-    opts = true,
-    keys = { {
-      "[c", function() require("treesitter-context").go_to_context(vim.v.count1) end, desc = "Go to upper context"
-    } }
   },
   { "nvim-treesitter/nvim-treesitter-textobjects", dependencies = { "nvim-treesitter/nvim-treesitter" } },
   {

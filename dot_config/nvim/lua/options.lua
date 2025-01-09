@@ -30,10 +30,23 @@ local options = {
 
   -- no cursor line
   cursorline = false,
+
+  -- project local lua configuration
+  exrc = true,
+  secure = true,
+
+  foldexpr = 'v:lua.vim.treesitter.foldexpr()',
+  foldmethod = 'expr',
+  foldcolumn = '1',
+  foldlevel = 99,
+  foldlevelstart = 99
 }
 
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
+
+-- custom
+vim.g.autoformat = true
 
 vim.cmd("colorscheme tokyonight")
