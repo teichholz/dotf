@@ -81,7 +81,7 @@ ins_left {
   function()
     return '▊'
   end,
-  color = { fg = colors.blue }, -- Sets highlighting of component
+  color = { fg = colors.blue },      -- Sets highlighting of component
   padding = { left = 0, right = 1 }, -- We don't need space before this
 }
 
@@ -146,6 +146,10 @@ ins_left {
   },
 }
 
+ins_left {
+  'buffers'
+}
+
 -- Insert mid section. You can make any number of sections in neovim :)
 -- for lualine it's any number greater then 2
 ins_left {
@@ -154,7 +158,7 @@ ins_left {
   end,
 }
 
-ins_left {
+ins_right {
   -- Lsp server name .
   function()
     local msg = 'No Active Lsp'
@@ -177,7 +181,7 @@ ins_left {
 
 -- Add components to right sections
 ins_right {
-  'o:encoding', -- option component same as &encoding in viml
+  'o:encoding',       -- option component same as &encoding in viml
   fmt = string.upper, -- I'm not sure why it's upper case either ;)
   cond = conditions.hide_in_width,
   color = { fg = colors.green, gui = 'bold' },

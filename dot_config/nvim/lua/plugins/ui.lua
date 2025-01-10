@@ -113,45 +113,20 @@ return {
     end,
   },
   {
-    'akinsho/bufferline.nvim',
-    lazy = false,
-    version = "*",
-    dependencies = 'nvim-tree/nvim-web-devicons',
-    opts = {
-      options = {
-        style_preset = 2,
-        close_command = function(n) Snacks.bufdelete(n) end,
-        right_mouse_command = function(n) Snacks.bufdelete(n) end,
-        diagnostics = "nvim_lsp",
-        always_show_bufferline = false,
-        offsets = {
-          {
-            filetype = "neo-tree",
-            text = "Neo-tree",
-            highlight = "Directory",
-            text_align = "left",
-          },
-        },
-      },
-    },
-    keys = {
-      { "<C-1>", "<cmd>BufferLineGoToBuffer 1<cr>", "Tab 1" },
-      { "<C-2>", "<cmd>BufferLineGoToBuffer 2<cr>", "Tab 2" },
-      { "<C-3>", "<cmd>BufferLineGoToBuffer 3<cr>", "Tab 3" },
-      { "<C-3>", "<cmd>BufferLineGoToBuffer 4<cr>", "Tab 4" },
-      { "<C-3>", "<cmd>BufferLineGoToBuffer 5<cr>", "Tab 5" },
-    },
-    config = function(_, opts)
-      require('bufferline').setup(opts)
-    end
-  },
-  {
     'nvim-lualine/lualine.nvim',
+    lazy = false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       local line = require("evilline")
       require("lualine").setup(line)
-    end
+    end,
+    keys = {
+      { "<C-1>", "<cmd>LualineBuffersJump 1<cr>" },
+      { "<C-2>", "<cmd>LualineBuffersJump 2<cr>" },
+      { "<C-3>", "<cmd>LualineBuffersJump 3<cr>" },
+      { "<C-4>", "<cmd>LualineBuffersJump 4<cr>" },
+      { "<C-5>", "<cmd>LualineBuffersJump 5<cr>" },
+    }
   },
   {
     "folke/tokyonight.nvim",
