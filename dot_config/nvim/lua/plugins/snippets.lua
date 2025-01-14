@@ -6,9 +6,9 @@ return {
     -- install jsregexp (optional!).
     build = "make install_jsregexp",
     keys = {
-      { "<C-L>", function() require 'luasnip'.jump(1) end,  mode = {"i", "s"} },
-      { "<C-J>", function() require 'luasnip'.jump(-1) end, mode = {"i", "s"} },
-      { "<C-K>", function() require 'luasnip'.expand() end, mode = "i" },
+      { "<C-J>", function() require 'luasnip'.jump(1) end,  mode = { "i", "s" } },
+      { "<C-K>", function() require 'luasnip'.jump(-1) end, mode = { "i", "s" } },
+      { "<C-L>", function() require 'luasnip'.expand() end, mode = "i" },
       {
         "<C-E>",
         function()

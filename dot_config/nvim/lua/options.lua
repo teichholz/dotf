@@ -31,6 +31,8 @@ local options = {
   -- no cursor line
   cursorline = false,
 
+  laststatus = 3,
+
   -- project local lua configuration
   exrc = true,
   secure = true,
