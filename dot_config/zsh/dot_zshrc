@@ -29,7 +29,6 @@ if ! zgenom saved; then
       zgenom load zdharma-continuum/fast-syntax-highlighting
       zgenom load zsh-users/zsh-completions src
       zgenom load zsh-users/zsh-autosuggestions
-      # zgenom load zsh-users/zsh-history-substring-search
       zgenom load hlissner/zsh-autopair autopair.zsh
   fi
 
@@ -39,44 +38,36 @@ fi
 
 # vi plugin overwrites keybinds so I have to defer mine after zsh vi is Initialized
 function zvm_after_init() {
-	source "$ZDOTDIR"/aliases.zsh
 	source "$ZDOTDIR"/keybinds.zsh
   source <(fzf --zsh)
 }
 
-if [[ $TERM != dumb ]]; then
-  autoload -Uz compinit && compinit -u -d "$ZSH_CACHE"/zcompdump
-  source "$ZDOTDIR"/config.zsh
-	source "$ZDOTDIR"/completion.zsh
-	
-	autopair-init
-  # nice project local environment variablees
-	eval "$(direnv hook zsh)"
-  # nicer cd / cdpath
-  eval "$(zoxide init zsh)"
-  if [[ "$OSTYPE" =~ ^darwin ]]; then
-    # asdf package manager
-    source "$(brew --prefix asdf)"/libexec/asdf.sh
-  fi
-  # node version manager
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash
-  # nice prompt
-  eval "$(starship init zsh)"
+autoload -Uz compinit && compinit -u -d "$ZSH_CACHE"/zcompdump
+source "$ZDOTDIR"/config.zsh
+source "$ZDOTDIR"/aliases.zsh
+source "$ZDOTDIR"/keybinds.zsh
+source "$ZDOTDIR"/completion.zsh
 
-  # better history
-  if [ -d  "$HOME/.atuin" ]; then 
-    . "$HOME/.atuin/bin/env"
-    eval "$(atuin init zsh)"
-  fi
+autopair-init
 
-  # source cargo env
-  _source "$HOME/.cargo/env"
+# nicer cd / cdpath
+eval "$(zoxide init zsh)"
 
-  # 1password plugins
-  _source "$HOME"/.config/op/plugins.sh
+# mise version manager
+if command -v mise &> /dev/null; then
+  eval "$(~/.local/bin/mise activate zsh)"
 fi
+
+if command -v direnv &> /dev/null; then
+  # mise can mostly replace direnv, but still nice to have
+  eval "$(direnv hook zsh)"
+fi
+
+# nice prompt
+eval "$(starship init zsh)"
+
+# 1password plugins
+_source "$HOME"/.config/op/plugins.sh
 
 if [ "${ZSH_DEBUGRC+1}" != "" ]; then
     zprof

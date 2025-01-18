@@ -65,6 +65,20 @@ if command -v exa >/dev/null; then
 	alias cat='bat --theme Dracula'
 fi
 
+show() {
+  for arg in "$@"; do
+    if [[ -f $arg ]]; then
+      type=$(xdg-mime query filetype "$arg")
+      if [[ $type =~ "image" && $TERM =~ ".*kitty.*" ]]; then
+        kitten icat "$arg"
+      else
+        cat "$arg"
+      fi
+    fi
+  done
+}; compdef show=cat
+
+alias cat=show
 
 if command -v exa >/dev/null; then
   alias exa="exa --group-directories-first";
@@ -96,8 +110,9 @@ function yi() {
 }
 
 e() {
-  if [[ -f $1 ]] && command -v nvim > /dev/null; then
-    nvim "$1"
+  type=$(xdg-mime query filetype "$arg")
+  if [[ -f $1 ]] && [[ $type =~ ".*text.*" ]]; then
+    vim "$1"
   elif [[ -d $1 ]] && command -v yazi > /dev/null; then
     yi "$1"
   else 
