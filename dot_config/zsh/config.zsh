@@ -1,9 +1,14 @@
-export EDITOR=nvim
-export MANPAGER="nvim +Man!"
+export EDITOR=vim
 
 # zsh-vi-mode
 export ZVM_INIT_MODE=sourcing
 export ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+
+# all hail neovim
+if command -v nvim >/dev/null; then
+  export EDITOR=nvim
+  export MANPAGER="nvim +Man!"
+fi
 
 # fd > find
 if command -v fd >/dev/null; then
@@ -18,17 +23,6 @@ if command -v fd >/dev/null; then
 	export FZF_COMPLETION_TRIGGER="**"
   export FZF_COMPLETION_OPTS='--border --info=inline'
 fi
-
-if command -v nnn > /dev/null; then 
-  export NNN_FIFO=/tmp/nnn.fifo
-  export NNN_PLUG='p:preview-tui;f:finder;d:fzcd'
-fi
-
-# go
-if command -v go > /dev/null; then
-	export PATH="$HOME/go/bin:$PATH"
-fi
-
 
 ## General
 export _JAVA_AWT_WM_NONREPARENTING=1

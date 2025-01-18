@@ -110,9 +110,9 @@ function yi() {
 }
 
 e() {
-  type=$(xdg-mime query filetype "$arg")
+  type=$(xdg-mime query filetype "$1")
   if [[ -f $1 ]] && [[ $type =~ ".*text.*" ]]; then
-    vim "$1"
+    "$EDITOR" "$1"
   elif [[ -d $1 ]] && command -v yazi > /dev/null; then
     yi "$1"
   else 
