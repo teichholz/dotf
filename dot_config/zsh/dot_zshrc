@@ -40,6 +40,10 @@ fi
 function zvm_after_init() {
 	source "$ZDOTDIR"/keybinds.zsh
   source <(fzf --zsh)
+
+  if type "zvm_after_init_extra" &> /dev/null; then
+    zvm_after_init_extra  
+  fi
 }
 
 autoload -Uz compinit && compinit -u -d "$ZSH_CACHE"/zcompdump
@@ -68,6 +72,12 @@ eval "$(starship init zsh)"
 
 # 1password plugins
 _source "$HOME"/.config/op/plugins.sh
+
+for file in ./local/*; do
+  if [[ -f $file ]]; then
+    source "$file"
+  fi
+done
 
 if [ "${ZSH_DEBUGRC+1}" != "" ]; then
     zprof
