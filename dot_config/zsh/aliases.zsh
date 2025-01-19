@@ -66,6 +66,15 @@ if command -v exa >/dev/null; then
 fi
 
 show() {
+  # check for options
+  for arg in "$@"; do
+    if [[ $arg =~ "-.*" ]]; then
+      cat "$@"
+      return
+    fi
+  done
+
+  # if no options, try to be smart
   for arg in "$@"; do
     if [[ -f $arg ]]; then
       type=$(xdg-mime query filetype "$arg")

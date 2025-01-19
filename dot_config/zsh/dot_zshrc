@@ -58,14 +58,10 @@ autopair-init
 eval "$(zoxide init zsh)"
 
 # mise version manager
-if command -v mise &> /dev/null; then
-  eval "$(~/.local/bin/mise activate zsh)"
-fi
+eval "$(~/.local/bin/mise activate zsh)"
 
-if command -v direnv &> /dev/null; then
-  # mise can mostly replace direnv, but still nice to have
-  eval "$(direnv hook zsh)"
-fi
+# mise can mostly replace direnv, but still nice to have
+eval "$(direnv hook zsh)"
 
 # nice prompt
 eval "$(starship init zsh)"
