@@ -32,6 +32,20 @@ return {
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
     },
+    config = function(_, opts)
+      local wk = require('which-key')
+      wk.setup(opts)
+      wk.add({
+        { "<leader>t", desc = "Tasks" },
+        { "<leader>c", desc = "Code" },
+        { "<leader>f", desc = "Find" },
+        { "<leader>a", desc = "Ai" },
+        { "<leader>g", desc = "Git" },
+        { "<leader>o", desc = "Open" },
+        { "<leader>u", desc = "Settings" },
+        { "<leader>x", desc = "Diagnostics" },
+      })
+    end,
     keys = {
       {
         "<leader>?",
@@ -47,6 +61,7 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {}
   },
+  -- better quickfix list
   {
     'stevearc/quicker.nvim',
     event = "FileType qf",
@@ -88,6 +103,14 @@ return {
         return dropbar_opts.bar.enable(buf, win, _)
       end
       local opts = {
+        icons = {
+          ui = {
+            bar = {
+              separator = '  ',
+              extends = '…',
+            },
+          },
+        },
         bar = {
           enable = enable,
         }

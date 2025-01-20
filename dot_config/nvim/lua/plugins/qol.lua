@@ -175,18 +175,6 @@ return {
     opts = {}
   },
   {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    ---@type Flash.Config
-    opts = {},
-    -- stylua: ignore
-    keys = {
-      { "s", mode = { "n" }, function() require("flash").jump() end,       desc = "Flash" },
-      { "S", mode = { "n" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-    },
-  },
-
-  {
     'stevearc/overseer.nvim',
     opts = {},
     lazy = false,

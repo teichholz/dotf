@@ -5,14 +5,20 @@ local options = {
   softtabstop = 2,
   expandtab = true,
 
-  completeopt = { "menu", "menuone", "preview", "noinsert" },
+  completeopt = { "menu,menuone,noselect" },
 
   -- relative line numbers
   number = true,
   relativenumber = true,
 
   -- clipboard
-  clipboard = "unnamed",
+  clipboard = "unnamedplus",
+
+  sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" },
+
+  grepprg = "rg --vimgrep",
+
+  autowrite = true,
 
   -- no swapfiles
   swapfile = false,
@@ -21,12 +27,16 @@ local options = {
   -- smart search
   smartcase = true,
 
+  smoothscroll = true,
+
   -- theme
   termguicolors = true,
   --background = "dark",
 
   -- mouse
   mouse = "a",
+
+  virtualedit = "block",
 
   -- no cursor line
   cursorline = false,

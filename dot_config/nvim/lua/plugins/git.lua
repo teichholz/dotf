@@ -10,6 +10,7 @@ return {
   {
     "sindrets/diffview.nvim",
     config = true,
+    lazy = false,
     opts = {
       use_icons = false
     },

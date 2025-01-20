@@ -28,7 +28,7 @@ return {
     -- optional for icon support
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
-      "default",
+      "ivy",
       files = {
         rg_opts = "--follow"
       },
@@ -43,8 +43,7 @@ return {
     },
     config = true,
     keys = {
-      { "<leader>ff", "<cmd>Fzf files<cr>", desc = "Files" },
-      { "<C-x><C-f>", "<cmd>Fzf files<cr>", desc = "Files" },
+      { "<leader>ff", "<cmd>Fzf files<cr>",                 desc = "Files" },
       {
         "<leader>fd",
         function()
@@ -54,14 +53,15 @@ return {
       },
       { "<leader>fh", "<cmd>Fzf help_tags<cr>",             desc = "Help" },
       { "<leader>fk", "<cmd>Fzf keymaps<cr>",               desc = "Keymaps" },
+      { "<leader>fo", "<cmd>Fzf oldfiles<cr>",              desc = "Old Files" },
       { "<leader>fr", "<cmd>Fzf resume<cr>",                desc = "Resume" },
       { "<leader>fb", "<cmd>Fzf buffers<cr>",               desc = "Buffers" },
       { "<leader>fg", "<cmd>Fzf grep_cword<cr>",            desc = "Grep" },
       { "<leader>fG", "<cmd>Fzf live_grep<cr>",             desc = "Project Grep" },
 
-      { "ga",         "<cmd>Fzf lsp_code_actions<cr>",      desc = "Code Actions (Fzf)" },
-      { "go",         "<cmd>Fzf lsp_document_symbols<cr>",  desc = "Document Symbols (Fzf)" },
-      { "gO",         "<cmd>Fzf lsp_workspace_symbols<cr>", desc = "Project Symbols (Fzf)" },
+      { "<leader>ca", "<cmd>Fzf lsp_code_actions<cr>",      desc = "Code Actions (Fzf)" },
+      { "<leader>cs", "<cmd>Fzf lsp_document_symbols<cr>",  desc = "Document Symbols (Fzf)" },
+      { "<leader>cS", "<cmd>Fzf lsp_workspace_symbols<cr>", desc = "Project Symbols (Fzf)" },
       { "gd",         "<cmd>lua GoToDefinition()<cr>",      desc = "Definitions (Fzf)" },
       { "gi",         "<cmd>Fzf lsp_implementations<cr>",   desc = "Implementations (Fzf)" },
       { "gD",         "<cmd>Fzf lsp_references<cr>",        desc = "References (Fzf)" },
