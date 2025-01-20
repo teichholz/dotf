@@ -34,43 +34,51 @@ return {
   },
   {
     "rgroli/other.nvim",
+    lazy = false,
     opts = {
       mappings = {
         {
-          pattern = "View",
-          target = "",
-          context = "Ctrl"
+          pattern = "/(.*)/movement.lua",
+          target = "/%1/ai.lua",
+          context = "test"
         },
         {
-          pattern = "View",
-          target = "",
-          context = "CtrLib"
+          pattern = "/(.*)/ai.lua",
+          target = "/%1/movement.lua",
+          context = "test"
         },
-        {
-          pattern = "ViewLib",
-          target = "",
-          context = "CtrLib"
-        },
-        {
-          pattern = "CtrlLib",
-          target = "",
-          context = "ViewLib"
-        },
-        {
-          pattern = "Ctrl",
-          target = "",
-          context = "View"
-        },
+        -- {
+        --   pattern = "View",
+        --   target = "",
+        --   context = "Ctrl"
+        -- },
+        -- {
+        --   pattern = "View",
+        --   target = "",
+        --   context = "CtrLib"
+        -- },
+        -- {
+        --   pattern = "ViewLib",
+        --   target = "",
+        --   context = "CtrLib"
+        -- },
+        -- {
+        --   pattern = "CtrlLib",
+        --   target = "",
+        --   context = "ViewLib"
+        -- },
+        -- {
+        --   pattern = "Ctrl",
+        --   target = "",
+        --   context = "View"
+        -- },
       },
-      transformers = {
-        app_state = function()
-
-        end
-      }
     },
     keys = {
-      "go", "<cmd>Other<cr>", desc = "Other"
+      { "#", "<cmd>Other<cr>", desc = "Other File" }
     },
-    config = true
+    config = function(_, opts)
+      require('other-nvim').setup(opts)
+    end
   }
 }

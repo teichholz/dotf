@@ -29,17 +29,6 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
       "ivy",
-      files = {
-        rg_opts = "--follow"
-      },
-      grep = {
-        rg_opts =
-        "--color=never --column --line-number --no-heading --smart-case --max-columns=4096 --follow --glob '!node_modules' -e"
-      },
-      live_grep = {
-        rg_opts =
-        "--color=never --column --line-number --no-heading --smart-case --max-columns=4096 --follow --glob '!node_modules' -e"
-      },
     },
     config = true,
     keys = {
