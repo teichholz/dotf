@@ -34,48 +34,48 @@ return {
   },
   {
     "rgroli/other.nvim",
-    lazy = false,
     opts = {
       mappings = {
         {
-          pattern = "/(.*)/movement.lua",
-          target = "/%1/ai.lua",
-          context = "test"
+          pattern = "/Source/icClient/html/(.*).html",
+          target  = "/Source/icClient/js/ngController/%1Ctrl.js",
+          context = "View->Ctrl"
         },
         {
-          pattern = "/(.*)/ai.lua",
-          target = "/%1/movement.lua",
-          context = "test"
+          pattern = "/Source/icClient/html/(.*).html",
+          target = "/lib/client-lib/js/ngController/%1Ctrl.js",
+          context = "View->Ctrl"
         },
-        -- {
-        --   pattern = "View",
-        --   target = "",
-        --   context = "Ctrl"
-        -- },
-        -- {
-        --   pattern = "View",
-        --   target = "",
-        --   context = "CtrLib"
-        -- },
-        -- {
-        --   pattern = "ViewLib",
-        --   target = "",
-        --   context = "CtrLib"
-        -- },
-        -- {
-        --   pattern = "CtrlLib",
-        --   target = "",
-        --   context = "ViewLib"
-        -- },
-        -- {
-        --   pattern = "Ctrl",
-        --   target = "",
-        --   context = "View"
-        -- },
+        {
+          pattern = "/home/tim/git/storm/icClientLib/html/(.*).html",
+          target = "/home/tim/git/storm/icClientLib/js/ngController/%1Ctrl.js",
+          context = "View->Ctrl"
+        },
+        {
+          pattern = "/home/tim/git/storm/icClientLib/html/(.*).html",
+          target = "/home/tim/git/storm/storm_hmi/Source/icClient/js/ngController/%1Ctrl.js",
+          context = "View->Ctrl"
+        },
+        {
+          pattern = "/home/tim/git/storm/icClientLib/js/ngController/(.*)Ctrl.js",
+          target = "/home/tim/git/storm/icClientLib/html/%1.html",
+          context = "Ctrl->View"
+        },
+        {
+          pattern = "/home/tim/git/storm/icClientLib/js/ngController/(.*)Ctrl.js",
+          target = "/Source/icClient/html/%1.html",
+          context = "Ctrl->View"
+        },
+        {
+          pattern = "/Source/icClient/js/ngController/(.*)Ctrl.js",
+          target = "/Source/icClient/html/%1.html",
+          context = "Ctrl->View"
+        },
       },
     },
     keys = {
-      { "#", "<cmd>Other<cr>", desc = "Other File" }
+      { "#",  "<cmd>Other<cr>", desc = "Other File" },
+      { "go", "<cmd>Other<cr>", desc = "Other File" }
     },
     config = function(_, opts)
       require('other-nvim').setup(opts)

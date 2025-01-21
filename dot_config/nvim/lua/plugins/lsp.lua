@@ -38,6 +38,7 @@ return {
       formatters_by_ft = {
         python = { "isort", "black" },
         javascript = { "prettierd", "prettier", stop_after_first = true, lsp_format = "prefer" },
+        html = { "prettierd", "prettier", stop_after_first = true, lsp_format = "fallback" },
         zsh = { "shellharden" },
         sh = { "shellharden" },
         bash = { "shellharden" },
@@ -158,23 +159,15 @@ return {
   },
   {
     "windwp/nvim-ts-autotag",
-    opts = true,
-    config = {
+    opts = {
       opts = {
         -- Defaults
-        enable_close = true,          -- Auto close tags
-        enable_rename = true,         -- Auto rename pairs of tags
-        enable_close_on_slash = false -- Auto close on trailing </
-      },
-      -- Also override individual filetype configs, these take priority.
-      -- Empty by default, useful if one of the "opts" global settings
-      -- doesn't work well in a specific filetype
-      per_filetype = {
-        ["html"] = {
-          enable_close = false
-        }
+        enable_close = true,         -- Auto close tags
+        enable_rename = true,        -- Auto rename pairs of tags
+        enable_close_on_slash = true -- Auto close on trailing </
       }
-    }
+    },
+    config = true
   },
   { "nvim-treesitter/nvim-treesitter-textobjects", dependencies = { "nvim-treesitter/nvim-treesitter" } },
   {
