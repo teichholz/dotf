@@ -3,8 +3,10 @@
 # Amazon Q pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zprofile.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zprofile.pre.zsh"
 
-# OP Openai Reference
+# API keys
 export OPENAI_API_KEY=op://Personal/OpenAI/Anmeldedaten
+export ANTHROPIC_API_KEY="op://Personal/Anthropic API Key/password"
+export AIDER_ANTHROPIC_API_KEY="op://Personal/Anthropic API Key/password"
 
 # Amazon Q post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/amazon-q/shell/zprofile.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zprofile.post.zsh"

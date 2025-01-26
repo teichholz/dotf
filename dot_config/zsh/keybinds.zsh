@@ -38,7 +38,7 @@ zle -N history-beginning-search-backward-then-append
 bindkey -M viins '^x^l' history-beginning-search-backward-then-append
 
 arch () {
-  o $(fd . /usr/share/doc/arch-wiki/html/en | fzf)
+  o "$(fd . /usr/share/doc/arch-wiki/html/en | fzf)"
 }
 zle -N arch
 
@@ -58,3 +58,6 @@ bindkey -s '^[8' '^A^F^F^F^F^F^F^F'
 
 # just vim :)
 bindkey -s '^V' 'vim . ^M'
+
+# just vim :)
+bindkey -s '^G' 'lazygit ^M'

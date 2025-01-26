@@ -16,13 +16,16 @@ alias egit="run emacs --eval '(magit)'"
 alias less="less -R"
 alias dc="docker-compose"
 
+# 1password
+alias opx="op run --no-masking --"
+
 alias teich-up="wakeonlan 40:b0:34:f3:d4:00"
 alias teich-ssh="ssh tim@teichserver"
 
 alias lman="man -M $HOME/ubuntu-man/"
 
 # ai pair programming
-alias aider="op run --no-masking -- python3 -m aider --vim"
+# alias aider="op run --no-masking -- python3 -m aider --vim"
 alias vimdiff="nvim -d"
 
 

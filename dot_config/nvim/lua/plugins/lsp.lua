@@ -39,7 +39,7 @@ return {
         python = { "isort", "black" },
         javascript = { "prettierd", "prettier", stop_after_first = true, lsp_format = "prefer" },
         typescript = { "biome", "prettierd", "prettier", stop_after_first = true, lsp_format = "prefer" },
-        svelte = { "biome", "prettierd", "prettier", stop_after_first = true, lsp_format = "prefer" },
+        svelte = { "lsp", stop_after_first = true, lsp_format = "fallback" },
         html = { "prettierd", "prettier", stop_after_first = true, lsp_format = "fallback" },
         json = { "biome", stop_after_first = true, lsp_format = "fallback" },
         go = { "goimports", stop_after_first = false, lsp_format = "fallback" },

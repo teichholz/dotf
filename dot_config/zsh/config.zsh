@@ -24,6 +24,14 @@ if command -v fd >/dev/null; then
   export FZF_COMPLETION_OPTS='--border --info=inline'
 fi
 
+# kitty shell integration
+if test "$KITTY_INSTALLATION_DIR" != ""; then
+    export KITTY_SHELL_INTEGRATION="enabled"
+    autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
+    kitty-integration
+    unfunction kitty-integration
+fi
+
 ## General
 export _JAVA_AWT_WM_NONREPARENTING=1
 
