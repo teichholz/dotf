@@ -47,6 +47,7 @@ return {
       { "<leader>fb", "<cmd>Fzf buffers<cr>",               desc = "Buffers" },
       { "<leader>fg", "<cmd>Fzf grep_cword<cr>",            desc = "Grep" },
       { "<leader>fG", "<cmd>Fzf live_grep<cr>",             desc = "Project Grep" },
+      { "<leader>fz", "<cmd>Fzf zoxide<cr>",                desc = "Zoxide" },
 
       { "<leader>ca", "<cmd>Fzf lsp_code_actions<cr>",      desc = "Code Actions (Fzf)" },
       { "<leader>cs", "<cmd>Fzf lsp_document_symbols<cr>",  desc = "Document Symbols (Fzf)" },

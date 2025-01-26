@@ -63,3 +63,7 @@ vim.g.autoformat = true
 vim.g.breadcrumbs = false
 
 vim.cmd("colorscheme tokyonight")
+
+vim.diagnostic.config({
+  virtual_text = true
+})
