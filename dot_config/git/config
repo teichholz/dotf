@@ -1,9 +1,22 @@
 [user]
 	name = Tim Eichholz
-	email = t.eichholz@reply.de
+	email = tim.eichholz98@web.de
   signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEF6oy4PTKCvkx/W8LfHsOW2Zb//mXbvC2bK7AZyDwsL
+
+
+[merge]
+	tool = "nvim"
+
 [mergetool]
-	keepBackup = true
+	keepBackup = false
+	prompt = false
+
+[mergetool "nvim"]
+	cmd = "nvim -c 'DiffviewOpen'"
+
+[diff]
+	tool = nvimdiff
+
 [core]
 	excludesfile = /Users/t.eichholz/.config/git/ignore
 
@@ -11,7 +24,7 @@
   format = ssh
 
 [gpg "ssh"]
-  program = {{ .ssh_key_program | quote }}
+  program = "/opt/1Password/op-ssh-sign"
 
 [commit]
   gpgsign = true

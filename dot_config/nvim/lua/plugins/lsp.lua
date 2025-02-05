@@ -173,6 +173,11 @@ return {
     },
     config = true
   },
+  {
+    'MagicDuck/grug-far.nvim',
+    config = true,
+    opts = {}
+  },
   { "nvim-treesitter/nvim-treesitter-textobjects", dependencies = { "nvim-treesitter/nvim-treesitter" } },
   {
     "folke/trouble.nvim",

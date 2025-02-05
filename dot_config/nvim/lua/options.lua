@@ -47,6 +47,9 @@ local options = {
   exrc = true,
   secure = true,
 
+  --diff
+  diffopt = 'internal,filler,closeoff,linematch:60',
+
   foldexpr = 'v:lua.vim.treesitter.foldexpr()',
   foldmethod = 'expr',
   foldcolumn = '1',
