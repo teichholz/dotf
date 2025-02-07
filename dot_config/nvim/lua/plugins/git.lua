@@ -16,8 +16,7 @@ return {
     },
     keys = {
       { "<leader>gd", function() DiffToggle("DiffviewOpen") end,          desc = "Diffview" },
-      { "<leader>gh", function() DiffToggle("DiffviewFileHistory %") end, desc = "File History" },
-      { "<leader>gH", function() DiffToggle("DiffviewFileHistory") end,   desc = "Branch History" }
+      { "<leader>gH", function() DiffToggle("DiffviewFileHistory %") end, desc = "File History" }
     },
   },
   --
