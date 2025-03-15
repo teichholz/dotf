@@ -125,6 +125,8 @@ e() {
   type=$(xdg-mime query filetype "$1")
   if [[ -f $1 ]] && [[ $type =~ ".*text.*" ]]; then
     "$EDITOR" "$1"
+  elif [[ -d $1 ]] && command -v spf > /dev/null; then
+    spf "$1"
   elif [[ -d $1 ]] && command -v yazi > /dev/null; then
     yi "$1"
   else 
