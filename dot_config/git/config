@@ -63,3 +63,4 @@
   uncommit = reset --soft HEAD^
   unstage = reset HEAD --
   wip = "!f() { git add . && git commit -m 'Work in progress'; }; f"
+  acp = "!f() { git add . && git commit -m "$1"; git push; }; f"
