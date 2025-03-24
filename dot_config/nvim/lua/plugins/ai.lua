@@ -1,63 +1,35 @@
+function Expand(partial, fallback)
+  local luasnip = require('luasnip')
+  local suggestion = require('supermaven-nvim.completion_preview')
+
+  if luasnip.expandable() then
+    luasnip.expand()
+  elseif suggestion.has_suggestion() then
+    suggestion.on_accept_suggestion(partial)
+  else
+    if fallback then
+      fallback()
+    end
+  end
+end
+
 return {
-  -- {
-  --   "olimorris/codecompanion.nvim",
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "nvim-treesitter/nvim-treesitter",
-  --     { "MeanderingProgrammer/render-markdown.nvim", ft = { "markdown", "codecompanion" } }
-  --   },
-  --   opts = {
-  --     strategies = {
-  --       chat = {
-  --         adapter = "openai",
-  --       },
-  --       inline = {
-  --         adapter = "openai",
-  --       },
-  --     },
-  --     adapters = {
-  --       openai = function()
-  --         return require("codecompanion.adapters").extend("openai", {
-  --           env = {
-  --             api_key = "cmd:op read op://Personal/OpenAI/Anmeldedaten --no-newline",
-  --           },
-  --         })
-  --       end,
-  --     },
-  --   },
-  --   keys = {
-  --     { "aa",         "<cmd>CodeCompanion<cr>",     mode = { "v" },  desc = "Ask AI" },
-  --     { "<leader>ac", "<cmd>CodeCompanionChat<cr>", desc = "Chat AI" },
-  --   },
-  --   config = true
-  -- },
-  -- {
-  --   "saghen/blink.cmp",
-  --   opts = {
-  --     sources = {
-  --       default = { "codecompanion" },
-  --       providers = {
-  --         codecompanion = {
-  --           name = "CodeCompanion",
-  --           module = "codecompanion.providers.completion.blink",
-  --         },
-  --       },
-  --     },
-  --   },
-  -- },
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
     lazy = false,
     version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
     opts = {
-      provider = "claude"
+      provider = "claude",
+      max_tokens = 4096,
     },
     build = "make",
     dependencies = {
       "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
+      -- optional
+      "ibhagwan/fzf-lua",
       {
         -- Make sure to set this up properly if you have lazy=true
         'MeanderingProgrammer/render-markdown.nvim',
@@ -67,5 +39,22 @@ return {
         ft = { "markdown", "Avante" },
       },
     },
+  },
+  {
+    "supermaven-inc/supermaven-nvim",
+    opts = {
+      keymaps = {
+        accept_suggestion = "<C-l>",
+        clear_suggestion = "<C-]>",
+        accept_word = "<C-j>",
+      },
+      ignore_filetypes = {},
+      disable_inline_completion = false,
+    },
+    config = true,
+    keys = {
+      { "<C-l>", function() Expand(false) end, mode = "i" },
+      { "<C-j>", function() Expand(true) end,  mode = "i" },
+    }
   }
 }
