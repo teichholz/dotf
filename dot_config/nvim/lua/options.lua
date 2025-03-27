@@ -4,6 +4,7 @@ local options = {
   tabstop = 2,
   softtabstop = 2,
   expandtab = true,
+  shiftround = true,
 
   completeopt = { "menu,menuone,noselect" },
 
@@ -33,6 +34,8 @@ local options = {
   termguicolors = true,
   --background = "dark",
 
+  smartindent = true,
+
   -- mouse
   mouse = "a",
 
@@ -48,7 +51,7 @@ local options = {
   secure = true,
 
   --diff
-  diffopt = 'internal,filler,closeoff,linematch:60',
+  diffopt = 'internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram',
 
   foldexpr = 'v:lua.vim.treesitter.foldexpr()',
   foldmethod = 'expr',
@@ -68,5 +71,8 @@ vim.g.breadcrumbs = false
 vim.cmd("colorscheme tokyonight")
 
 vim.diagnostic.config({
-  virtual_text = true
+  virtual_text = true,
+  virtual_lines = {
+    current_line = true,
+  }
 })
